@@ -23,7 +23,7 @@ class Api
 
     def self.load_all
         current_page = 0
-        until current_page == 50
+        until current_page == 25
             page_number = "?page=#{current_page}"
             response = RestClient.get(url+page_number)
             data = JSON.parse(response.body)
