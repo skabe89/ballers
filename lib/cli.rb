@@ -8,29 +8,27 @@ class Cli
         @roster = []
         @working_array = []
         @trivia = Trivia.grab
-        #every time working array is used, return working array to []
     end
 
     def start
-        #pull random nba trivi
         puts "Hello! Welcome to Ballers!"
         puts "Please wait while we load your players!"
         line_spacer
         puts "Trivia: #{@trivia["question"]}"
         Api.load_all
         puts "Answer: #{@trivia["answer"]}"
-        sleep(3)
+        sleep(1)
         main_menu
     end
 
     def main_menu
+        sleep(1)
         line_spacer
         puts "Main Menu"
         line_spacer
         puts "Enter '1' to search for players by last name."
-        puts "Enter '2' to search for players by first name."
-        puts "Enter '3' to search for a player by full name."
-        puts "Enter '4' to look at your current roster!"
+        puts "Enter '2' to search for a player by full name."
+        puts "Enter '3' to look at your current roster!"
         puts "Type 'exit' to exit the program."
         line_spacer
         menu_options
@@ -39,15 +37,10 @@ class Cli
     def menu_options
         input = get_input
             if input == "1"
-                puts "thanks for searching player by last name"
-                main_menu
+                search_by_last_name_menu
             elsif input == "2"
-                puts "thanks for searching player by first name"
-                main_menu
-            elsif input == "3"
-                puts "Type in the name of the player you want to find"
                 full_name_search
-            elsif input == "4"
+            elsif input == "3"
                 view_roster
             elsif input.upcase == "EXIT"
                 exit_program
@@ -59,6 +52,7 @@ class Cli
 
     def full_name_search
         @current_player = nil
+        puts "Enter name of player you want to find"
         input = get_input
         @current_player = Ballers.find_player_by_name(input)
         if @current_player != nil
@@ -73,12 +67,13 @@ class Cli
     end
 
     def full_name_sub_menu
+        sleep(1)
         line_spacer
         puts "Your current player is #{current_player_name}"
         line_spacer
         puts "Enter '1' to add player to your roster."
         puts "Enter '2' to check the player's position."
-        puts "Enter '3' to search for a different player."
+        puts "Enter '3' to search for a different player by name."
         puts "Enter '4' to go back to the main menu."
         puts "Enter 'exit' to exit the program."
         line_spacer
@@ -90,7 +85,7 @@ class Cli
         if input == "1"
            add_to_roster
         elsif input == "2" 
-           puts "#{current_player_name}, #{player_position(@current_player)}"
+           puts player_position(@current_player)
            full_name_sub_menu
         elsif input == "3"
             full_name_search
@@ -105,18 +100,77 @@ class Cli
     end
 
     def player_position(i)
-        position = Ballers.player(i).position
-        position == "" ? "I'm sorry, this player's position has not been entered into our database yet. Stay tuned!" : position
+        position = "Position: " + Ballers.player(i).position
+        position == "Position: " ? "I'm sorry, this player's position has not been entered into our database yet. Stay tuned!" : position
     end
 
     def current_player_name
         Ballers.player(current_player).full_name
     end
 
+    
+
+
+
+
+    def search_by_last_name_menu
+        puts "Type in the last name of the player you are looking for"
+        search_by_last_name_options
+    end
+
+    def search_by_last_name_options
+        input = get_input
+        line_spacer
+        pull_multi_players(input)
+            if @working_array.length == 0
+                puts "We could not find any players with that last name, taking you back to the main menu"
+                main_menu
+            else
+                view_working_array
+                last_name_sub_menu
+            end
+    end
+
+    def last_name_sub_menu
+        line_spacer
+        puts "Enter the number to the left of the player you would like to look at, or 'back' to go back to the main menu"
+        last_name_sub_options
+    end
+
+    def last_name_sub_options
+        current_player = nil
+        input = get_input
+        if [*1..@working_array.length].include?(input.to_i)
+            @current_player = Ballers.player(@working_array[input.to_i - 1])
+            full_name_sub_menu
+        elsif input.upcase == "BACK"
+            main_menu
+        else
+            puts "Incorrect input, taking you back to the main menu"
+            main_menu
+        end
+    end
+
+    def pull_multi_players(name)
+        @working_array = []
+        Ballers.multi_players(name).each{|player| @working_array << player}
+    end
+
+    def view_working_array
+        @working_array.uniq.each.with_index(1){|i, index| puts "#{index}. #{Ballers.player(i).full_name}"}
+    end
+
+
+
+
+
+
+
+
+
     def get_input
         print "Enter here: "
         gets.strip
-       
     end
 
     def add_to_roster
@@ -134,6 +188,7 @@ class Cli
     end
 
     def roster_sub_menu
+        sleep(1)
         line_spacer
         puts "Enter '1' to check the position of one of your players."
         puts "Enter '2' to remove players from your roster."
@@ -164,6 +219,7 @@ class Cli
         line_spacer
         view_roster_literal
         line_spacer
+        sleep(1)
         puts "Enter the number on the left of the player you would like to check or 'back' to go back to your roster"
         roster_check_position
     end
@@ -173,7 +229,7 @@ class Cli
         if input.upcase == "BACK"
             view_roster
         elsif [*1..@roster.length].include?(input.to_i)
-            puts "#{Ballers.player(@roster[input.to_i - 1]).full_name}, #{player_position(@roster[input.to_i - 1])}"
+            puts player_position(@roster[input.to_i - 1])
             view_roster
         else
             take_back_to_roster
@@ -184,6 +240,7 @@ class Cli
         line_spacer
         view_roster_literal
         line_spacer
+        sleep(1)
         puts "Enter the number to the left of the player you would like removed from your roster..."
         puts "Enter 'all' to remove all players or 'back' to go back to your roster."
         roster_delete_options
@@ -205,6 +262,7 @@ class Cli
     end
 
     def make_sure_menu
+        sleep(1)
         line_spacer
         puts "Are you sure you want to clear your whole roster?"
         puts "Enter 'yes' or 'no'."
@@ -239,6 +297,7 @@ class Cli
     end
 
     def view_roster_literal
+        sleep(1)
         puts "Your roster is currently:"
             @roster.each.with_index(1){|name, index| puts "#{index}. #{Ballers.player(name).full_name}"}
     end
@@ -256,4 +315,5 @@ class Cli
         puts "See you later!"
         exit
     end
+
 end

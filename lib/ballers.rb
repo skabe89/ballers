@@ -43,9 +43,13 @@ class Ballers
     @@all.find{|player| player == baller ? place = player : nil}
   end
 
+  def self.multi_players(name)
+    place = []
+    @@all.select{|player| player.last_name.upcase == name.upcase ? place << player : nil}
+    place
+  end
+
   def self.all
     @@all
   end
-
 end
-
