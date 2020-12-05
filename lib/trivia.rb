@@ -5,7 +5,7 @@ class Trivia
     {"question" => "What NBA player has the most championships?",
     "answer" => "Bill Russel with 11"},
     {"question" => "How many championship rings does Michael Jordan have?",
-    "answer" => "Michael Jordan has won 6 championshps"},
+    "answer" => "Michael Jordan has won 6 championships"},
     {"question" => "What was Vince Carter's vertical at the NBA combine?",
     "answer" => "Vince recorded a whopping 43 inch standing vertical!"},
     {"question" => "How old is the NBA?",
