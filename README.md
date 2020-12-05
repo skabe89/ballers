@@ -1,8 +1,10 @@
 # Ballers
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ballers`. To experiment with that code, run `bin/console` for an interactive prompt.
+Ballers is an interactive way to look through a list of NBA players from from the 1998-2002 era.
 
-TODO: Delete this and the text above, and describe your gem
+Search for your favorite players, add them to your own personal roster and check the positions they're listed at.
+
+Have fun making an early 2000's Dream squad!
 
 ## Installation
 
@@ -22,7 +24,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Use bin/run within the 'Ballers' folder inside your terminal to run the program.
+
+Follow the prompts and have fun!
 
 ## Development
 

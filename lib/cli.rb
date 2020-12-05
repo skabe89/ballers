@@ -45,14 +45,14 @@ class Cli
             elsif input.upcase == "EXIT"
                 exit_program
             else 
-                puts "Incorrect user input, try again"
+                puts "Incorrect user input, try again."
                 menu_options
             end
     end
 
     def full_name_search
         @current_player = nil
-        puts "Enter name of player you want to find"
+        puts "Enter the name of player you want to find."
         input = get_input
         @current_player = Ballers.find_player_by_name(input)
         if @current_player != nil
@@ -61,7 +61,7 @@ class Cli
             puts "#{Ballers.all.index(@current_player)}. #{@current_player.full_name}"
             full_name_sub_menu
         else
-            puts "We could not find that player, sending you back to the main menu"
+            puts "We could not find that player, sending you back to the main menu."
             main_menu
         end
     end
@@ -73,7 +73,7 @@ class Cli
         line_spacer
         puts "Enter '1' to add player to your roster."
         puts "Enter '2' to check the player's position."
-        puts "Enter '3' to search for a different player by name."
+        puts "Enter '3' to search for a different player by full name."
         puts "Enter '4' to go back to the main menu."
         puts "Enter 'exit' to exit the program."
         line_spacer
@@ -94,7 +94,7 @@ class Cli
         elsif input.upcase == "EXIT"
             exit_program
         else
-            puts "Incorrect user input, try again"
+            puts "Incorrect user input, try again."
             full_name_sub_menu
         end
     end
@@ -108,13 +108,8 @@ class Cli
         Ballers.player(current_player).full_name
     end
 
-    
-
-
-
-
     def search_by_last_name_menu
-        puts "Type in the last name of the player you are looking for"
+        puts "Type in the last name of the player you are looking for."
         search_by_last_name_options
     end
 
@@ -123,7 +118,7 @@ class Cli
         line_spacer
         pull_multi_players(input)
             if @working_array.length == 0
-                puts "We could not find any players with that last name, taking you back to the main menu"
+                puts "We could not find any players with that last name, taking you back to the main menu."
                 main_menu
             else
                 view_working_array
@@ -133,7 +128,7 @@ class Cli
 
     def last_name_sub_menu
         line_spacer
-        puts "Enter the number to the left of the player you would like to look at, or 'back' to go back to the main menu"
+        puts "Enter the number to the left of the player you would like to look at, or 'back' to go back to the main menu."
         last_name_sub_options
     end
 
@@ -146,7 +141,7 @@ class Cli
         elsif input.upcase == "BACK"
             main_menu
         else
-            puts "Incorrect input, taking you back to the main menu"
+            puts "Incorrect input, taking you back to the main menu."
             main_menu
         end
     end
@@ -159,14 +154,6 @@ class Cli
     def view_working_array
         @working_array.uniq.each.with_index(1){|i, index| puts "#{index}. #{Ballers.player(i).full_name}"}
     end
-
-
-
-
-
-
-
-
 
     def get_input
         print "Enter here: "
@@ -208,7 +195,7 @@ class Cli
         elsif input.upcase == "EXIT"
             exit_program
         else
-            puts "Incorrect user input, try again"
+            puts "Incorrect user input, try again."
             line_spacer
             view_roster_literal
             roster_sub_menu
@@ -220,7 +207,7 @@ class Cli
         view_roster_literal
         line_spacer
         sleep(1)
-        puts "Enter the number on the left of the player you would like to check or 'back' to go back to your roster"
+        puts "Enter the number on the left of the player you would like to check or 'back' to go back to your roster."
         roster_check_position
     end
 
@@ -253,7 +240,7 @@ class Cli
         elsif input.upcase == "BACK"
             view_roster
         elsif [*1..@roster.length].include?(input.to_i)
-            puts "#{Ballers.player(@roster[input.to_i - 1]).full_name} has been removed from your roster"
+            puts "#{Ballers.player(@roster[input.to_i - 1]).full_name} has been removed from your roster."
             @roster.delete_at(input.to_i - 1)
             view_roster
         else
@@ -274,10 +261,10 @@ class Cli
         if input.upcase == "YES"
             @roster.clear
             line_spacer
-            puts "Your roster has been cleared"
+            puts "Your roster has been cleared."
             main_menu
         elsif input.upcase == "NO"
-            puts "Taking you back to your roster"
+            puts "Taking you back to your roster."
             view_roster
         else
             take_back_to_roster
@@ -287,7 +274,7 @@ class Cli
     def view_roster
         if @roster.length == 0
             line_spacer
-            puts "Your roster is currently empty" 
+            puts "Your roster is currently empty." 
             main_menu
         else
             line_spacer
@@ -307,7 +294,7 @@ class Cli
     end
 
     def take_back_to_roster
-        puts "Incorrect user input, taking you back to your roster"
+        puts "Incorrect user input, taking you back to your roster."
         view_roster
     end
 
